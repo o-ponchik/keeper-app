@@ -1,0 +1,46 @@
+import React, { useState } from "react";
+import Header from "./Header";
+import Note from "./Note";
+import Footer from "./Footer";
+import CreateArea from "./CreateArea";
+// import AccessAlarmIcon from "@mui/icons-material/AccessAlarm";
+// import ThreeDRotation from "@mui/icons-material/ThreeDRotation";
+
+export default function App() {
+  const [notes, setNotes] = useState([]);
+
+  function addNote(note) {
+    setNotes((prevNotes) => {
+      return [...prevNotes, note];
+    });
+  }
+
+  function deleteNote(id) {
+    setNotes((prevNotes) => {
+      return prevNotes.filter((item, index) => {
+        return index !== id;
+      });
+    });
+  }
+
+  return (
+    <div className="App">
+      <Header />
+
+      <CreateArea onAdd={addNote} />
+      {notes.map((item, index) => {
+        return (
+          <Note
+            key={index}
+            id={index}
+            title={item.title}
+            content={item.content}
+            onDelete={deleteNote}
+          />
+        );
+      })}
+
+      <Footer />
+    </div>
+  );
+}
